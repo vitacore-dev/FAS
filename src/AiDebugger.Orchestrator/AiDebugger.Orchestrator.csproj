@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>AiDebugger.Orchestrator</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AiDebugger.Storage\AiDebugger.Storage.csproj" />
+    <ProjectReference Include="..\AiDebugger.Packager\AiDebugger.Packager.csproj" />
+    <ProjectReference Include="..\AiDebugger.Retrieval\AiDebugger.Retrieval.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,40 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: aidebugger
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d aidebugger"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  loki:
+    image: grafana/loki:2.9.4
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+
+  aidebugger:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+      loki:
+        condition: service_started
+    environment:
+      ConnectionStrings__Default: "Host=postgres;Port=5432;Database=aidebugger;Username=postgres;Password=postgres"
+      Loki__Url: "http://loki:3100"
+      Worker__IngestIntervalMinutes: "5"
+      Worker__WatermarkSeconds: "120"
+    # Секреты: создать .env или docker compose run -e LLM__ApiKey=... -e Publisher__Token=...
+    # env_file: .env
+
+volumes:
+  postgres_data:

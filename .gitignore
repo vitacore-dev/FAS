@@ -1,0 +1,27 @@
+# Build
+bin/
+obj/
+out/
+*.user
+*.suo
+*.cache
+*.dll
+*.exe
+*.pdb
+*.nupkg
+project.lock.json
+.DS_Store
+
+# IDE
+.idea/
+.vs/
+*.rsuser
+
+# Config / secrets (override with env or user secrets)
+appsettings.Production.json
+appsettings.Local.json
+*.env
+.env.*
+
+# EF
+**/Migrations/*.Designer.cs
